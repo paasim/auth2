@@ -1,0 +1,19 @@
+.TH AUTH2 7
+.SH NAME
+auth2 \- server to generate jwts to authorize users
+.SH SYNOPSIS
+.B auth2
+.RB [ \-\-gen\-keys ]
+.SH DESCRIPTION
+.P
+Listens to requests to path /jwt and responds with a JWT parametrized by the environment variables. By default, the systemd unit defined in
+.I /lib/systemd/system/auth2.service
+reads the environment variables from
+.IR /etc/auth2/env .
+.SH OPTIONS
+.TP
+.B \-\-gen\-keys
+Only generate keys. Saves output to files
+.I priv.pem
+and
+.IR pub.pem .

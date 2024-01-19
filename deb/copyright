@@ -1,0 +1,6 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Source: https://github.com/paasim/auth2
+Upstream-Name: auth2
+Files: *
+Copyright: 2024 Markus Paasiniemi <paasim@iki.fi>
+License: MIT

@@ -1,0 +1,5 @@
+ISSUER=https://auth.example.com
+AUDIENCE=https://example.com
+TTL_MINUTES=720 # 60*12
+PORT=6879
+PEM_PATH=/etc/auth2/priv.pem

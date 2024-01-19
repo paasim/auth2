@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+if [ ! -f /etc/auth2/priv.pem ]; then
+  echo "private key does not exist, generating"
+  cd /etc/auth2
+  auth2 --gen-keys
+  chmod 0600 priv.pem
+  chmod 0644 pub.pem
+fi

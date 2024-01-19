@@ -1,0 +1,12 @@
+[Unit]
+Description=Auth2 service
+
+[Service]
+EnvironmentFile=/etc/auth2/env
+ExecStart=/usr/bin/auth2
+Restart=on-failure
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

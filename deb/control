@@ -1,0 +1,13 @@
+Package: auth2
+Version: x.y.z
+Section: utils
+Priority: optional
+Maintainer: Markus Paasiniemi <paasim@iki.fi>
+Homepage: https://github.com/paasim/auth2
+Architecture: amd64
+Depends: libc6, openssl
+Description: obtain JWTs for authorization
+ Provides an endpoint that can be used to obtain JWTs that another service
+ might use for authorization. Assumes that the endpoint is secured by other
+ means such as client certificates etc.
+ One might wonder why the JWT when there is already a client certificate?

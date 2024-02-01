@@ -10,15 +10,25 @@ DEB_SRC="deb-${VERSION}-${ARCH}"
 DEB_NAME="${NAME}_${VERSION}_${ARCH}.deb"
 
 mkdir "${DEB_SRC}"
-install -Dm755 "${BIN_PATH}" "${DEB_SRC}/usr/bin/${NAME}"
+install -Dm755 "${BIN_PATH}/${NAME}" "${DEB_SRC}/usr/bin/${NAME}"
+install -Dm755 "${BIN_PATH}/gen" "${DEB_SRC}/usr/bin/${NAME}-gen"
+install -Dm755 "deb/gen-crl.sh" "${DEB_SRC}/usr/bin/${NAME}-gen-crl"
+
 install -Dm644 "deb/env" "${DEB_SRC}/etc/${NAME}/env"
+install -Dm644 "deb/cert-name" "${DEB_SRC}/etc/${NAME}/cert-name"
+install -Dm644 "deb/ca.conf" "${DEB_SRC}/etc/${NAME}/ca.conf"
+
 install -Dm644 "deb/${NAME}.service" "${DEB_SRC}/lib/systemd/system/${NAME}.service"
+install -Dm644 static/* -t "${DEB_SRC}/usr/share/${NAME}/static"
+
 install -Dm644 "deb/${NAME}.7" "${DEB_SRC}/usr/share/man/man7/${NAME}.7"
+install -Dm644 "deb/${NAME}.7" "${DEB_SRC}/usr/share/man/man7/${NAME}-gen.7"
 install -Dm644 README.md "${DEB_SRC}/usr/share/doc/${NAME}/README.md"
 install -Dm644 deb/changelog "${DEB_SRC}/usr/share/doc/${NAME}/changelog"
 install -Dm644 deb/copyright "${DEB_SRC}/usr/share/doc/${NAME}/copyright"
 sed 's/^/ /g' LICENSE >> "${DEB_SRC}/usr/share/doc/${NAME}/copyright"
 gzip -n --best "${DEB_SRC}/usr/share/man/man7/${NAME}.7"
+gzip -n --best "${DEB_SRC}/usr/share/man/man7/${NAME}-gen.7"
 gzip -n --best "${DEB_SRC}/usr/share/doc/${NAME}/changelog"
 
 install -Dm755 deb/postinst "${DEB_SRC}/DEBIAN/postinst"

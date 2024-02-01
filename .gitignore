@@ -1,4 +1,9 @@
 /target
-*.pem
-*.deb
+tmp
 .env
+*.pem
+*.p12
+*.deb
+*.txt
+*.db
+certs

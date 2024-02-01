@@ -1,19 +1,22 @@
 .TH AUTH2 7
 .SH NAME
-auth2 \- server to generate jwts to authorize users
+auth2 \- certificate authority service
 .SH SYNOPSIS
 .B auth2
-.RB [ \-\-gen\-keys ]
 .SH DESCRIPTION
 .P
-Listens to requests to path /jwt and responds with a JWT parametrized by the environment variables. By default, the systemd unit defined in
+Listens to following paths:
+.IP /jwt
+responds with a JWT parametrized by the environment variables.
+.IP /certs
+reponds with a list of the current certificates and allows creation of new ones.
+.IP /cert
+returns a new certificate for a post request with cert name and password provided as form data.
+.P
+By default, the systemd unit defined in
 .I /lib/systemd/system/auth2.service
 reads the environment variables from
 .IR /etc/auth2/env .
 .SH OPTIONS
-.TP
-.B \-\-gen\-keys
-Only generate keys. Saves output to files
-.I priv.pem
-and
-.IR pub.pem .
+See
+.IR /etc/auth2/env .

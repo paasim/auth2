@@ -1,1 +1,3 @@
 /etc/auth2/env
+/etc/auth2/cert-name
+/etc/auth2/ca.conf

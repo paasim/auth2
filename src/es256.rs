@@ -70,7 +70,7 @@ mod tests {
     }
 
     #[test]
-    fn private_key_to_pem_works() {
+    fn pem_serialization_works() {
         let key = Es256::gen().unwrap();
         let key2 = key.private_key_pem().and_then(Es256::from_pem).unwrap();
         assert_eq!(key.key.private_key(), key2.key.private_key());

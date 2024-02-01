@@ -5,6 +5,7 @@ Description=Auth2 service
 EnvironmentFile=/etc/auth2/env
 ExecStart=/usr/bin/auth2
 Restart=on-failure
+WorkingDirectory=/usr/share/auth2
 User=root
 Group=root
 

@@ -1,5 +1,8 @@
-ISSUER=https://auth.example.com
-AUDIENCE=https://example.com
-TTL_MINUTES=720 # 60*12
-PORT=6879
-PEM_PATH=/etc/auth2/priv.pem
+AUDIENCE=https://example.eu
+CA_PATH=/etc/auth2/certs/ca-crt.pem
+CERT_DAYS=365
+DATABASE_URL=sqlite:/etc/auth2/certs/certs.db
+ISSUER=https://auth.example.eu
+PEM_PATH=/etc/auth2/certs/es-key.pem
+PORT=3377
+TTL_MINUTES=720

@@ -1,11 +1,27 @@
-#!/bin/sh
+#!/bin/bash
 
-set -e
+set -eu
 
-if [ ! -f /etc/auth2/priv.pem ]; then
-  echo "private key does not exist, generating"
-  cd /etc/auth2
-  auth2 --gen-keys
-  chmod 0600 priv.pem
-  chmod 0644 pub.pem
+ENV_FILE=/etc/auth2/env
+
+eval "$(grep PEM_PATH $ENV_FILE)"
+if [ ! -f "$PEM_PATH" ]; then
+  echo "es-key key does not exist, generating"
+
+  mkdir -p "$(dirname "$PEM_PATH")"
+  auth2-gen es256 > "$PEM_PATH"
+  chmod 0600 "$PEM_PATH"
+fi
+
+eval "export $(grep CA_PATH $ENV_FILE)"
+if [ ! -f "$CA_PATH" ]; then
+  echo "ca-cert does not exist, generating"
+
+  eval "export $(grep CERT_DAYS $ENV_FILE)"
+  for v in CN O C; do
+    eval "export $(grep "^$v=" /etc/auth2/cert-name)"
+  done
+  auth2-gen x509-ca > "$CA_PATH"
+  chmod 0600 "$CA_PATH"
+  auth2-gen-crl
 fi

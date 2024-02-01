@@ -1,0 +1,25 @@
+.TH AUTH2 7
+.SH NAME
+auth2-gen \- generate keys required for the server.
+.SH SYNOPSIS
+.B auth2
+.I key_type
+.SH DESCRIPTION
+.P
+For
+.B es256
+the program works as is.
+.B x509-ca
+expects O, C, CN and CERT_DAYS -variables to be set for certificate
+organization, country, common name and duration.
+.B x509-client
+expects CA_PATH, CN, CERT_DAYS for root cert path, common name and duration.
+.SH OPTIONS
+.TP
+.I key_type
+.B es256
+for es256 key,
+.B x509-ca
+for a root certificate and
+.B x509-client
+for a client certificate signed by the root ca.

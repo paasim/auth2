@@ -1,0 +1,72 @@
+:root {
+  --primary-color-dark: #405e6d;
+  --primary-color-light: #176c97;
+  --background: #030308;
+}
+
+body {
+  background-color: #000;
+}
+
+* {
+  color: var(--primary-color-light);
+  font-family: monospace;
+  font-size: xxx-large;
+  text-align: center;
+}
+
+article {
+  background-color: var(--background);
+  border-radius: 20px;
+  width: min-content;
+  position: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.2em 0.2em;
+  margin-bottom: 0.5em;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+tr {
+  margin-bottom: 1em;
+}
+
+h2 {
+  margin: 0.4em 0.4em 0em 0.4em;
+}
+
+hr {
+  margin: 1em 0em;
+}
+
+input {
+  font-size: xx-large;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--background);
+}
+
+input[type="submit"] {
+  background-color: var(--background);
+  padding: 0.4em;
+}
+
+p {
+  font-size: xx-large;
+  margin: 1em 0.4em;
+}
+
+.smaller-text {
+  font-size: x-large;
+  margin: 1em 0.4em;
+}
+
+.grey-text {
+  margin: 0.4em;
+  font-size: small;
+  color: var(--primary-color-dark);
+}

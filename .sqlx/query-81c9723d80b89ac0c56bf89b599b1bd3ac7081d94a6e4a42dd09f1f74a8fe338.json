@@ -1,0 +1,20 @@
+{
+  "db_name": "SQLite",
+  "query": "\n                INSERT INTO cert (cname, fingerprint, not_before, not_after)\n                VALUES (?, ?, ?, ?)\n                RETURNING rowid AS \"id: u32\"\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "id: u32",
+        "ordinal": 0,
+        "type_info": "Int64"
+      }
+    ],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "81c9723d80b89ac0c56bf89b599b1bd3ac7081d94a6e4a42dd09f1f74a8fe338"
+}

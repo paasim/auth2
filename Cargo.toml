@@ -1,17 +1,21 @@
 [package]
 name = "auth2"
-version = "0.1.0"
+default-run = "auth2"
+version = "0.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+askama = "0.12"
 axum = { version = "0.7", features = ["macros"] }
 openssl = "0.10"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+sqlx = { version = "0.7.3", features = ["runtime-tokio", "macros", "migrate", "sqlite", "time"] }
 tokio = { version = "1.35", features = ["rt-multi-thread", "macros"] }
 tower-http = { version = "0.5", features = ["fs", "trace"] }
+time = { version = "0.3", features = ["parsing"] }
 tracing = "0.1"
 tracing-subscriber = "0.3"
 url = { version = "2.5", features = ["serde"] }

@@ -1,0 +1,38 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT cname, fingerprint, not_before, not_after\n            FROM cert\n            ORDER BY not_before DESC\n            ",
+  "describe": {
+    "columns": [
+      {
+        "name": "cname",
+        "ordinal": 0,
+        "type_info": "Text"
+      },
+      {
+        "name": "fingerprint",
+        "ordinal": 1,
+        "type_info": "Blob"
+      },
+      {
+        "name": "not_before",
+        "ordinal": 2,
+        "type_info": "Datetime"
+      },
+      {
+        "name": "not_after",
+        "ordinal": 3,
+        "type_info": "Datetime"
+      }
+    ],
+    "parameters": {
+      "Right": 0
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "9bf48171e427f3247e31ab99ed0387aaebdae9b7f0291f2c7e760e4c9313ac9f"
+}

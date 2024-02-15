@@ -8,8 +8,9 @@ use crate::jwt::default_jwt;
 use crate::x509::X509Cert;
 use askama::Template;
 use axum::extract::{Request, State};
+use axum::response::{IntoResponse, Response};
 use axum::{http::header, response, routing};
-use axum::{response::Response, Form, Json, Router};
+use axum::{Form, Json, Router};
 use serde::{Deserialize, Serialize};
 use sqlx::SqlitePool;
 use std::{net::SocketAddr, sync::Arc, time::Duration};
@@ -108,7 +109,7 @@ async fn certs_endpoint<S, T>(
 async fn crt_endpoint(
     State((ca, cert_days, pool)): State<(Arc<X509Cert>, u32, SqlitePool)>,
     Form(new_cert): Form<NewCert>,
-) -> Res<impl response::IntoResponse> {
+) -> Res<Response> {
     new_cert.validate()?;
     let ca = ca.as_ref();
     let client = X509Cert::new_client(ca, &new_cert.name, cert_days)?;
@@ -124,7 +125,7 @@ async fn crt_endpoint(
             format!("attachment; filename=\"{}.p12\"", new_cert.name),
         ),
     ];
-    Ok((headers, data))
+    Ok((headers, data).into_response())
 }
 
 async fn jwt_endpoint(State(state): State<Arc<(Es256, Url, Url, u32)>>) -> Res<Json<Token>> {

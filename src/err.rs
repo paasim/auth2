@@ -119,6 +119,11 @@ impl From<time::error::Parse> for AuthError {
         Self::Other(value.to_string())
     }
 }
+impl From<time::error::ComponentRange> for AuthError {
+    fn from(value: time::error::ComponentRange) -> Self {
+        Self::Other(value.to_string())
+    }
+}
 
 impl axum::response::IntoResponse for AuthError {
     fn into_response(self) -> axum::response::Response {

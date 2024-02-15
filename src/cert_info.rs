@@ -26,6 +26,27 @@ pub struct CertInfo {
     pub not_after: OffsetDateTime,
 }
 
+#[derive(Debug, Deserialize, Serialize)]
+struct CertInfoRow {
+    cname: String,
+    fingerprint: Vec<u8>,
+    not_before: i64,
+    not_after: i64,
+}
+
+impl TryFrom<CertInfoRow> for CertInfo {
+    type Error = AuthError;
+
+    fn try_from(value: CertInfoRow) -> Result<Self, Self::Error> {
+        Ok(Self {
+            cname: value.cname,
+            fingerprint: value.fingerprint,
+            not_before: OffsetDateTime::from_unix_timestamp(value.not_before)?,
+            not_after: OffsetDateTime::from_unix_timestamp(value.not_after)?,
+        })
+    }
+}
+
 impl CertInfo {
     pub async fn insert_cert(&self, con: &SqlitePool) -> Res<u32> {
         let id_row = query!(
@@ -46,7 +67,7 @@ impl CertInfo {
 
     pub async fn get_all(con: &SqlitePool) -> Res<Vec<Self>> {
         let rows = query_as!(
-            Self,
+            CertInfoRow,
             r#"
             SELECT cname, fingerprint, not_before, not_after
             FROM cert
@@ -55,7 +76,7 @@ impl CertInfo {
         )
         .fetch_all(con)
         .await?;
-        Ok(rows)
+        rows.into_iter().map(CertInfo::try_from).collect()
     }
 }
 

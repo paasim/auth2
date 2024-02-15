@@ -2,5 +2,5 @@ FROM debian:bookworm
 
 RUN apt-get update && apt-get install -y libssl-dev
 
-WORKDIR "/pkg"
-CMD ["./auth2"]
+WORKDIR "/usr/share/auth2"
+CMD ["/usr/bin/auth2"]

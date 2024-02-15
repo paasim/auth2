@@ -16,12 +16,12 @@
       {
         "name": "not_before",
         "ordinal": 2,
-        "type_info": "Datetime"
+        "type_info": "Int64"
       },
       {
         "name": "not_after",
         "ordinal": 3,
-        "type_info": "Datetime"
+        "type_info": "Int64"
       }
     ],
     "parameters": {

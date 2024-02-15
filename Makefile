@@ -2,14 +2,14 @@ include .env
 export
 
 .env:
-	sed 's/\/etc\/auth2\///' deb/env > .env
+	sed -E 's/\/(usr\/share|var\/lib)\/auth2\///' deb/env > .env
 	echo "SQLX_OFFLINE=true" >> .env
 
 certs:
 	mkdir -p $@
 
 certs/ca.conf: certs
-	sed 's/\/etc\/auth2/./' deb/ca.conf > $@
+	sed 's/\/usr\/share\/auth2/./' deb/ca.conf > $@
 
 certs/ca-crl.pem: certs/ca.conf certs/ca-crt.pem certs
 	mkdir -p certs/db/newcerts
@@ -19,7 +19,7 @@ certs/ca-crl.pem: certs/ca.conf certs/ca-crt.pem certs
 certs/ca-crt.pem: certs .env
 	CN=ca.example.eu O=example C=EU cargo run --bin gen -- x509-ca > $@
 
-certs/certs.db: certs
+certs.db: certs
 	sqlx database create
 	sqlx migrate run
 	cargo sqlx prepare --sqlite-create-db-wal false
@@ -31,9 +31,11 @@ certs/server-crt.pem: certs/ca-crt.pem certs .env
 	CA_PATH=$< CN=*.example.eu cargo run --bin gen -- x509-client > $@
 
 clean:
-	rm -f *.p12
-	rm -rf certs
 	#rm -rf target
+	rm -rf certs
+	rm -f *.p12
+	rm -f *.db
+	rm .env
 
 curl-jwt:
 	curl -v --cacert certs/ca-crt.pem \
@@ -62,10 +64,10 @@ curl-other:
 		--resolve other.example.eu:443:127.0.0.1 \
 		https://other.example.eu:443
 
-dev: .env certs/ca-crt.pem certs/es-key.pem certs/certs.db
+dev: .env certs/ca-crt.pem certs/es-key.pem certs.db
 	cargo run
 
-dev-docker: certs/ca-crt.pem certs/es-key.pem certs/certs.db certs/ca-crl.pem certs/server-crt.pem
+dev-docker: certs/ca-crt.pem certs/es-key.pem certs.db certs/ca-crl.pem certs/server-crt.pem
 	cargo build
 	docker compose up
 

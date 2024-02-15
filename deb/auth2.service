@@ -2,12 +2,15 @@
 Description=Auth2 service
 
 [Service]
-EnvironmentFile=/etc/auth2/env
-ExecStart=/usr/bin/auth2
+DynamicUser=yes
+User=_auth2
+Group=auth2
+StateDirectory=auth2
 Restart=on-failure
+EnvironmentFile=/etc/auth2/env
+ReadOnlyPaths=/usr/share/auth2
 WorkingDirectory=/usr/share/auth2
-User=root
-Group=root
+ExecStart=/usr/bin/auth2
 
 [Install]
 WantedBy=multi-user.target

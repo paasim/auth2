@@ -1,0 +1,86 @@
+name: release
+on:
+  push:
+    tags:
+    - "v[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ env.VERSION }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get the release version from the tag
+        run: |
+          cargo metadata --no-deps --format-version 1 \
+            | jq -r '"VERSION=" + .packages[0].version' \
+            >> $GITHUB_ENV
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create ${{ env.VERSION }}
+
+  build-release:
+    name: build-release
+    needs: ['create-release']
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        arch: [x86_64, arm64]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: install dependencies and build (x86_64)
+      if: matrix.arch == 'x86_64'
+      run: |
+        sudo apt-get update && sudo apt-get install openssl
+        cargo build --verbose --release
+        for img in auth2 gen; do
+          strip target/release/$img
+        done
+        echo "INSTALL_PATH=target/release" >> $GITHUB_ENV
+
+    - name: install dependencies and build (arm64)
+      if: matrix.arch == 'arm64'
+      run: |
+        ./arm64-cross/build.sh
+        docker run -u $(id -u):$(id -g) -v ${PWD}:/home/builder/rust-pkg --rm cross-compiler
+        for img in auth2 gen; do
+          docker run -u $(id -u):$(id -g) -v ${PWD}:/home/builder/rust-pkg --rm \
+            cross-compiler aarch64-linux-gnu-strip \
+            /home/builder/rust-pkg/target/aarch64-unknown-linux-gnu/release/${img}
+        done
+        echo "INSTALL_PATH=target/aarch64-unknown-linux-gnu/release" >> $GITHUB_ENV
+
+    - name: Build archive
+      shell: bash
+      run: |
+        staging="auth2-v${{ needs.create-release.outputs.version }}-${{ matrix.arch }}"
+        mkdir -p "$staging"
+        cp -r migrations static LICENSE README.md "$staging/"
+        for img in auth2 gen; do
+          cp "${{ env.INSTALL_PATH }}/${img}" "$staging/"
+        done
+        tar czf "$staging.tar.gz" "$staging"
+        echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
+
+    - name: Build debian package
+      run: |
+        sudo apt-get update && sudo apt-get install -y fakeroot lintian
+        ./deb/build.sh ${{ env.INSTALL_PATH }} ${{ needs.create-release.outputs.version }} ${{ matrix.arch }}
+        echo "DEB_ASSET=auth2_${{ needs.create-release.outputs.version }}_${{ matrix.arch }}.deb" >> $GITHUB_ENV
+
+    - name: Upload release archive and debian package
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release upload ${{ needs.create-release.outputs.version }} ${{ env.ASSET }}
+        gh release upload ${{ needs.create-release.outputs.version }} ${{ env.DEB_ASSET }}

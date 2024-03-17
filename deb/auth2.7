@@ -1,16 +1,18 @@
 .TH AUTH2 7
 .SH NAME
-auth2 \- certificate authority service
+auth2 \- certificate authority service with webauthn to make it more complicated
 .SH SYNOPSIS
 .B auth2
 .SH DESCRIPTION
 .P
 Listens to following paths:
-.IP /jwt
-responds with a JWT parametrized by the environment variables.
-.IP /certs
+.IP /webauthn/register
+webauthn registration form.
+.IP /webauthn/authenticate
+webauthn authentication form that returns a JWT as a cookie after a successfull authentication.
+.IP /certs/all
 reponds with a list of the current certificates and allows creation of new ones.
-.IP /cert
+.IP /certs/new
 returns a new certificate for a post request with cert name and password provided as form data.
 .P
 By default, the systemd unit defined in

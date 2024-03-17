@@ -2,9 +2,10 @@
 
 {% block content %}
 
-<form action="/cert" method="post" onsubmit="setTimeout(() => window.location.replace('/'), 5000)">
+<form action="/certs/new" method="post" onsubmit="setTimeout(() => window.location.replace('/certs/all'), 5000)">
   <p>
-    <input name="name" id="name" pattern="[a-z0-9.-]{4,32}" type="text" placeholder="name" required />
+    <input name="name" id="name" pattern="[a-z0-9.-]+" minlength="4" maxlength="32" type="text" placeholder="name"
+      required />
     <input name="password" id="password" minlength="8" maxlength="32" type="password" placeholder="password" required />
   </p>
   <p><input type="submit" value="add new cert" /></p>
@@ -15,9 +16,9 @@
 <section>
   {% for cert in certs %}
   <article>
-    <h2>{{ cert.cname }}</h2>
-    <p class="grey-text">{{ cert.fingerprint|format_fpr }}</p>
-    <p class="smaller-text"> {{ cert.not_before|format_date }} - {{ cert.not_after|format_date }}</p>
+    <h2>{{ cert.cname() }}</h2>
+    <p class="grey-text">{{ cert.fingerprint() }}</p>
+    <p class="smaller-text"> {{ cert.not_before() }} - {{ cert.not_after() }}</p>
   </article>
   {% endfor %}
 </section>

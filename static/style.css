@@ -50,7 +50,10 @@ input {
   background-color: var(--background);
 }
 
-input[type="submit"] {
+button {
+  font-size: xx-large;
+  border: none;
+  border-radius: 5px;
   background-color: var(--background);
   padding: 0.4em;
 }
@@ -63,6 +66,10 @@ p {
 .smaller-text {
   font-size: x-large;
   margin: 1em 0.4em;
+}
+
+:disabled {
+  color: var(--primary-color-dark);
 }
 
 .grey-text {

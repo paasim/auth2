@@ -1,3 +1,7 @@
+auth2 (0.3.0) UNRELEASED; urgency=low
+  * Obtain JWTs with webauthn authentication.
+ -- Markus Paasiniemi <paasim@iki.fi>  Sun, 10 Mar 2024 19:34:05 +0200
+
 auth2 (0.2.0) UNRELEASED; urgency=low
   * Add ca-functionality. JWTs currently unused.
  -- Markus Paasiniemi <paasim@iki.fi>  Thu, 01 Feb 2024 17:23:15 +0200

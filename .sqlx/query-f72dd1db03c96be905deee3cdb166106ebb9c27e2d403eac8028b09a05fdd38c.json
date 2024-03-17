@@ -1,0 +1,20 @@
+{
+  "db_name": "SQLite",
+  "query": "\n            SELECT cred_id\n            FROM user_credential\n            INNER JOIN user USING(user_id)\n            WHERE user_name = ?",
+  "describe": {
+    "columns": [
+      {
+        "name": "cred_id",
+        "ordinal": 0,
+        "type_info": "Blob"
+      }
+    ],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "f72dd1db03c96be905deee3cdb166106ebb9c27e2d403eac8028b09a05fdd38c"
+}

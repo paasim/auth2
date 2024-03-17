@@ -1,0 +1,20 @@
+{
+  "db_name": "SQLite",
+  "query": "SELECT cred_pk FROM user_credential WHERE user_id = ? AND cred_id = ?",
+  "describe": {
+    "columns": [
+      {
+        "name": "cred_pk",
+        "ordinal": 0,
+        "type_info": "Blob"
+      }
+    ],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": [
+      false
+    ]
+  },
+  "hash": "1afccaa678e5fc45697a152fab382fd9278d2d3b599574a3b3625c8b244dad9e"
+}

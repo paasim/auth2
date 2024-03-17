@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS user (
+  user_id INTEGER PRIMARY KEY,
+  user_name TEXT UNIQUE NOT NULL
+) STRICT, WITHOUT ROWID;
+
+CREATE TABLE IF NOT EXISTS user_credential (
+  user_id INTEGER NULL,
+  cred_id BLOB NOT NULL,
+  cred_pk BLOB NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES user(user_id)
+) STRICT;

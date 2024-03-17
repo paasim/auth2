@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "\n                INSERT INTO cert (cname, fingerprint, not_before, not_after)\n                VALUES (?, ?, ?, ?)\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "41d44741b97d0f4796a72b48a41461fc39c49d936059832b29adb23692c5f46b"
+}

@@ -9,11 +9,15 @@
   <link rel="stylesheet" type="text/css" href="/style.css" />
   <link rel="icon" href="/lock.svg" />
   <link rel="manifest" href="/manifest.json" />
+  {% block headers %}
+  {% endblock headers %}
 </head>
 
 <body>
   <header>
     <h1>Certs</h1>
+    <a href="/webauthn/register">register</a>
+    <a href="/webauthn/authenticate">authenticate</a>
   </header>
   <hr />
   <main>

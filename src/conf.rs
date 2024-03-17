@@ -2,13 +2,12 @@ use crate::err::Res;
 use crate::es256::Es256;
 use crate::x509::X509Cert;
 use std::{env, fs};
-use url::Url;
 
 pub struct Conf {
     pub jwt_key: Es256,
     pub ca_cert: X509Cert,
-    pub issuer: Url,
-    pub audience: Url,
+    pub issuer: String,
+    pub audience: String,
     pub ttl: u32,
     pub port: u16,
     pub db_url: String,
@@ -23,8 +22,8 @@ impl Conf {
     pub fn read_from_env() -> Res<Self> {
         let ca_pem = fs::read(get_var("CA_PATH")?)?;
         Ok(Conf {
-            issuer: get_var("ISSUER")?.parse()?,
-            audience: get_var("AUDIENCE")?.parse()?,
+            issuer: get_var("ISSUER")?,
+            audience: get_var("AUDIENCE")?,
             ttl: get_var("TTL_MINUTES")?.parse()?,
             port: get_var("PORT")?.parse()?,
             db_url: get_var("DATABASE_URL")?,

@@ -1,8 +1,8 @@
-AUDIENCE=https://example.eu
+AUDIENCE=https://auth.example.eu
 CA_PATH=/usr/share/auth2/certs/ca-crt.pem
 CERT_DAYS=365
-DATABASE_URL=sqlite:/var/lib/auth2/certs.db
-ISSUER=https://auth.example.eu
+DATABASE_URL=sqlite:/var/lib/auth2/auth2.db
+ISSUER=auth.example.eu
 PEM_PATH=/usr/share/auth2/certs/es-key.pem
 PORT=3377
 TTL_MINUTES=720

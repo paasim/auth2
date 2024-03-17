@@ -1,5 +1,5 @@
 use auth2::conf::get_var;
-use auth2::err::{opt_to_res, AuthError, Res};
+use auth2::err::{AuthError, Res};
 use auth2::es256::Es256;
 use auth2::x509::X509Cert;
 use std::{env, fs, str};
@@ -26,8 +26,8 @@ impl str::FromStr for KeyType {
 
 fn get_keytype() -> Res<KeyType> {
     let mut args = env::args();
-    opt_to_res(args.next(), "expected argument")?;
-    opt_to_res(args.next(), "expected keytype")?.parse()
+    args.next().ok_or("expected argument")?;
+    args.next().ok_or("expected keytype")?.parse()
 }
 
 fn gen_keys(keytype: KeyType) -> Res<()> {

@@ -6,7 +6,7 @@
 
 {% block content %}
 <form method="post" id="authentication-form">
-  <input name="name" id="name" pattern="[a-z0-9.]{4,32}" type="text" placeholder="name" {% match name %} {% when Some
+  <input name="name" id="name" pattern="[a-z0-9.-]{4,32}" type="text" placeholder="name" {% match name %} {% when Some
     with (name) %} value="{{name}}" {% when None %} {% endmatch %} required /> <button id="get-creds" type="button"
     onclick="getCreds()">get credentials</button>
   <input name="id" id="id" type="hidden" />
